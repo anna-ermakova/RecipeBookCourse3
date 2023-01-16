@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pro.sky.recipebookcourse3.model.Recipes;
 import pro.sky.recipebookcourse3.services.RecipeServices;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/recipe")
@@ -20,13 +22,12 @@ public class RecipeController {
 
 
     @GetMapping("/getRecipe")
-    public int Recipe(@RequestParam int lastId) {
-
-        return recipeServices.getRecipe(lastId);
+    public Recipes getRecipeById(@RequestParam Long idRecipe) {
+        return recipeServices.getRecipeById(idRecipe);
     }
 
     @GetMapping("/addRecipe")
-    public addRecipe(@RequestParam Recipes recipe ) {
-        return recipeServices.addRecipe(Recipes recipe, lastId++);
+    public void addRecipe(@RequestParam String recipeName, @RequestParam int cookingTimeMin, @RequestParam List<Long> ingrIds, @RequestParam List<String> steps) {
+        recipeServices.addRecipe(recipeName, cookingTimeMin, ingrIds, steps);
     }
 }

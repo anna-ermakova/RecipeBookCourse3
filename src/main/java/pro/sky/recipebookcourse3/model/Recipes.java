@@ -3,17 +3,16 @@ package pro.sky.recipebookcourse3.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
 @AllArgsConstructor
 public class Recipes {
-    private String RECIPE_NAME;
-    private int COOKING_TIME_MIN;
-    private Map<Integer, Ingredients> ingredients;
-    ArrayList<String> cookingSteps;
+    private String recipeName;
+    private int cookingTimeMin;
+    private Map<Long, Ingredients> ingredients;
+    private List<String> cookingSteps;
 
 
 }
