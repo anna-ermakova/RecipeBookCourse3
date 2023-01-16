@@ -22,7 +22,7 @@ public class IngredientController {
         return ingredientService.getIngrById(idIngr);
     }
 
-    @GetMapping("/addRecipe")
+    @GetMapping("/addIngr")
     public void addIngredient(@RequestParam String ingredientName, @RequestParam int volume, @RequestParam String unitOfMeasure) {
         ingredientService.addIngredient(ingredientName, volume, unitOfMeasure);
     }
