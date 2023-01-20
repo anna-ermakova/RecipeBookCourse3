@@ -13,14 +13,40 @@ public class IngredientServiceImpl implements IngredientService {
     private Map<Long, Ingredients> ingredients = new HashMap<>();
 
     @Override
-    public void addIngredient(String ingredientName, int volume, String unitOfMeasure) {
-        Ingredients ingredients1 = new Ingredients(ingredientName, volume, unitOfMeasure);
-        ingredients.put(idIngr, ingredients1);
+    public Long addIngredient(Ingredients ingredient) {
         idIngr++;
+        ingredients.put(idIngr, ingredient);
+        return idIngr;
+    }
+
+    @Override
+    public boolean existById(long idIngr) {
+        return ingredients.containsKey(idIngr);
+    }
+
+    @Override
+    public void editIngredient(Long idIngr, Ingredients ingredient) {
+        if (ingredients.containsKey(idIngr)) {
+            ingredients.put(idIngr, ingredient);
+        }
     }
 
     @Override
     public Ingredients getIngrById(Long idIngr) {
         return ingredients.get(idIngr);
+    }
+
+    @Override
+    public boolean deleteIngredient(long idIngr) {
+        if (ingredients.containsKey(idIngr)) {
+            ingredients.remove(idIngr);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Map<Long, Ingredients> getAllIngredients() {
+        return ingredients;
     }
 }

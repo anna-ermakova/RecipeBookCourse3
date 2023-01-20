@@ -1,18 +1,22 @@
 package pro.sky.recipebookcourse3.services;
 
+import pro.sky.recipebookcourse3.model.RecipeCreateDTO;
 import pro.sky.recipebookcourse3.model.Recipes;
 
-import java.util.List;
+import java.util.Map;
 
 public interface RecipeServices {
 
 
-    void addRecipe(String recipeName, int cookingTimeMin, List<Long> ingrIds, List<String> steps);
-
+    Recipes editRecipe(Long idRecipe, RecipeCreateDTO recipeDTO);
 
     Recipes getRecipeById(Long idRecipe);
 
-    Recipes deleteRecipe(Long idRecipe);
+    Long addRecipe(RecipeCreateDTO recipeDTO);
 
-    Recipes updateRecipe(Long idRecipe, Recipes recipe);
+    boolean existById(long idRecipe);
+
+    boolean deleteRecipe(long idRecipe);
+
+    Map<Long, Recipes> getAllRecipes();
 }

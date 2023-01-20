@@ -1,13 +1,12 @@
 package pro.sky.recipebookcourse3.services.impl;
 
 import org.springframework.stereotype.Service;
-import pro.sky.recipebookcourse3.model.Ingredients;
+import pro.sky.recipebookcourse3.model.RecipeCreateDTO;
 import pro.sky.recipebookcourse3.model.Recipes;
 import pro.sky.recipebookcourse3.services.IngredientService;
 import pro.sky.recipebookcourse3.services.RecipeServices;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -22,14 +21,28 @@ public class RecipeServicesImpl implements RecipeServices {
     }
 
     @Override
-    public void addRecipe(String recipeName, int cookingTimeMin, List<Long> ingrIds, List<String> steps) {
-        Map<Long, Ingredients> ingredients = new HashMap<>();
-        for (Long ingrId : ingrIds) {
-            ingredients.put(ingrId, ingredientService.getIngrById(ingrId));
-        }
-        Recipes recipe = new Recipes(recipeName, cookingTimeMin, ingredients, steps);
-        recipes.put(idRecipe, recipe);
+    public Long addRecipe(RecipeCreateDTO recipeDTO) {
+        Recipes recipe = fromDTO(recipeDTO);
         idRecipe++;
+        recipes.put(idRecipe, recipe);
+        return idRecipe;
+    }
+
+    private Recipes fromDTO(RecipeCreateDTO recipeDTO) {
+        Recipes recipe = new Recipes(recipeDTO.getRecipeName(), recipeDTO.getCookingTimeMin(), recipeDTO.getCookingSteps());
+        for (Long ingrId : recipeDTO.getIngredientsIds()) {
+            recipe.getIngredients().put(ingrId, ingredientService.getIngrById(ingrId));
+        }
+        return recipe;
+    }
+
+    @Override
+    public Recipes editRecipe(Long idRecipe, RecipeCreateDTO recipeDTO) {
+
+        Recipes recipe = fromDTO(recipeDTO);
+        recipes.put(idRecipe, recipe);
+
+        return recipe;
     }
 
     @Override
@@ -38,14 +51,22 @@ public class RecipeServicesImpl implements RecipeServices {
     }
 
     @Override
-    public Recipes deleteRecipe(Long idRecipe) {
-        return recipes.remove(idRecipe);
+    public boolean existById(long idRecipe) {
+        return recipes.containsKey(idRecipe);
     }
 
     @Override
-    public Recipes updateRecipe(Long idRecipe, Recipes recipe) {
-        recipes.put(idRecipe, recipe);
-        return recipe;
+    public boolean deleteRecipe(long idRecipe) {
+        if (recipes.containsKey(idRecipe)) {
+            recipes.remove(idRecipe);
+            return true;
+        }
+        return false;
+    }
 
+    @Override
+    public Map<Long, Recipes> getAllRecipes() {
+        return recipes;
     }
 }
+

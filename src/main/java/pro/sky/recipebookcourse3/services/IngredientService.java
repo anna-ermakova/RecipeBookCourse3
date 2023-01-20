@@ -2,8 +2,20 @@ package pro.sky.recipebookcourse3.services;
 
 import pro.sky.recipebookcourse3.model.Ingredients;
 
+import java.util.Map;
+
 public interface IngredientService {
-    void addIngredient(String ingredientName, int volume, String unitOfMeasure);
+
+
+    Long addIngredient(Ingredients ingredient);
+
+    boolean existById(long idIngr);
+
+    void editIngredient(Long idIngr, Ingredients ingredient);
 
     Ingredients getIngrById(Long idIngr);
+
+    boolean deleteIngredient(long idIngr);
+
+    Map<Long,Ingredients> getAllIngredients();
 }
